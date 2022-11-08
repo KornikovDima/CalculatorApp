@@ -1,7 +1,12 @@
 package com.example.calculatorapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.os.PersistableBundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
@@ -15,23 +20,23 @@ class MainActivity : AppCompatActivity() {
     private var operator: Operator = Operator.NONE
     private var isOperatorClicked: Boolean = false
     private var operand1: Double = 0.0
-    private lateinit var button9:Button
-    private lateinit var button8:Button
-    private lateinit var button7:Button
-    private lateinit var button6:Button
-    private lateinit var button5:Button
-    private lateinit var button4:Button
-    private lateinit var button3:Button
-    private lateinit var button2:Button
-    private lateinit var button1:Button
-    private lateinit var button0:Button
-    private lateinit var clear:Button
-    private lateinit var div:Button
-    private lateinit var mult:Button
-    private lateinit var plus:Button
-    private lateinit var minus:Button
-    private lateinit var dot:Button
-    private lateinit var result:Button
+    private lateinit var button9: Button
+    private lateinit var button8: Button
+    private lateinit var button7: Button
+    private lateinit var button6: Button
+    private lateinit var button5: Button
+    private lateinit var button4: Button
+    private lateinit var button3: Button
+    private lateinit var button2: Button
+    private lateinit var button1: Button
+    private lateinit var button0: Button
+    private lateinit var clear: Button
+    private lateinit var div: Button
+    private lateinit var mult: Button
+    private lateinit var plus: Button
+    private lateinit var minus: Button
+    private lateinit var dot: Button
+    private lateinit var result: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initializeComponent()
+
     }
+
 
     private fun initializeComponent() {
         resultTv = findViewById(R.id.resultTv)
@@ -60,22 +67,39 @@ class MainActivity : AppCompatActivity() {
         minus = findViewById(R.id.minus)
         result = findViewById(R.id.result)
         clear = findViewById(R.id.clear)
-        numberButtons = arrayOf(button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, dot)
+        numberButtons = arrayOf(
+            button0,
+            button1,
+            button2,
+            button3,
+            button4,
+            button5,
+            button6,
+            button7,
+            button8,
+            button9,
+            dot
+        )
         operatorButton = listOf(div, mult, plus, minus)
-        for (i in numberButtons){ i.setOnClickListener { numberButtonClick(i) }}
-        for (i in operatorButton){ i.setOnClickListener { operatorButtonClick(i) }}
+        for (i in numberButtons) {
+            i.setOnClickListener { numberButtonClick(i) }
+        }
+        for (i in operatorButton) {
+            i.setOnClickListener { operatorButtonClick(i) }
+        }
         result.setOnClickListener { resultClick() }
         clear.setOnClickListener {
             strNumber.clear()
             resultTv.text = strNumber
-            isOperatorClicked = false}
+            isOperatorClicked = false
+        }
     }
 
 
     private fun resultClick() {
         val operand2 = strNumber.toString().toDouble()
-        val result:Double
-        when(operator){
+        val result: Double
+        when (operator) {
             Operator.ADD -> result = operand1 + operand2
             Operator.SUB -> result = operand1 - operand2
             Operator.MUL -> result = operand1 * operand2
@@ -86,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         strNumber.append(result.toString())
         resultTv.text = strNumber
         isOperatorClicked = true
+
     }
 
     private fun operatorButtonClick(btn: Button) {
@@ -96,16 +121,23 @@ class MainActivity : AppCompatActivity() {
         else operator = Operator.NONE
         isOperatorClicked = true
 
+
     }
 
-    private fun numberButtonClick(btn:Button){
-        if (isOperatorClicked){
+    private fun numberButtonClick(btn: Button) {
+        if (isOperatorClicked) {
             operand1 = strNumber.toString().toDouble()
             strNumber.clear()
             isOperatorClicked = false
         }
         strNumber.append(btn.text)
         resultTv.text = strNumber
+
+    }
+
+    fun getOptionsActivity(view: View) {
+        val intent = Intent(this, OptionsActivity::class.java)
+        startActivity(intent)
     }
 
 }

@@ -17,4 +17,7 @@
     <string name="dot">.</string>
     <string name="_0">0</string>
     <string name="result">=</string>
+    <string name="opt">Opt</string>
+    <string name="orange">Оранжевая тема кнопок</string>
+    <string name="green">Зеленая тема кнопок</string>
 </resources>
